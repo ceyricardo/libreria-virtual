@@ -10,4 +10,5 @@ interface BookInterface
     public function createBook(array $bookDetails);
     public function updateBook($bookId, array $newDetails);
     public function calculateBookQualification($bookId);
+    public function getReviews($bookId);
 }

@@ -69,6 +69,11 @@ class BookController extends Controller
         return response()->json(['data' => $this->bookInterface->calculateBookQualification($id)]);
     }
 
+    public function getReviews(string $id)
+    {
+        return response()->json(['data' => $this->bookInterface->getReviews($id)]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

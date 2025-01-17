@@ -32,4 +32,8 @@ class BookRepository implements BookInterface
     {
         return Review::where('book_id', $bookId)->avg('qualification');
     }
+    public function getReviews($bookId)
+    {
+        return Review::where('book_id', $bookId)->select('qualification','comment')->get();
+    }
 }

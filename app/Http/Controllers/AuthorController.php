@@ -65,7 +65,6 @@ class AuthorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        echo $request;
         $newDetails = $request->only([
             'name',
             'nationality',
