@@ -28,7 +28,7 @@ class AuthorController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {        
+    {
         $authorDetails = $request->only([
             'name',
             'nationality',
@@ -37,9 +37,9 @@ class AuthorController extends Controller
 
         return response()->json(
             [
-                'data' => $this->authorRepository->createAuthor($authorDetails)                
+                'data' => $this->authorRepository->createAuthor($authorDetails)
             ],
-            
+
         );
     }
 
@@ -54,7 +54,7 @@ class AuthorController extends Controller
     }
 
     public function getBooks(string $id)
-    {                
+    {
         return response()->json([
             'data' => $this->authorRepository->getBooks($id)
         ]);
@@ -83,7 +83,13 @@ class AuthorController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->authorRepository->deleteAuthor($id);
-        return response()->noContent();
+        $author = $this->authorRepository->getAuthorById($id);
+
+        if ($author) {
+            $this->authorRepository->deleteAuthor($id);
+            return response()->noContent();
+        }
+
+        return response()->json(['message' => 'Author not found'], 404);
     }
 }

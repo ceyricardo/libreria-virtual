@@ -65,7 +65,11 @@ class ReviewController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->reviewInterface->deleteReview($id);
-        return response()->noContent();
+        $review = $this->reviewInterface->getReviewById($id);
+        if ($review) {
+            $this->reviewInterface->deleteReview($id);
+            return response()->noContent();
+        }
+        return response()->json(['message' => 'Review not found'], 404);
     }
 }

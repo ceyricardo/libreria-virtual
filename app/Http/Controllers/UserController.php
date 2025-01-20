@@ -53,7 +53,7 @@ class UserController extends Controller
             'nationality',
             'birthdate',
         ]);
-        return response()->json(['data' => $this->userInterface->updateUser($id,$newDetails)]);
+        return response()->json(['data' => $this->userInterface->updateUser($id, $newDetails)]);
     }
 
     /**
@@ -61,7 +61,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->userInterface->deleteUser($id);
-        return response()->noContent();
+        $user = $this->userInterface->getUserById($id);
+        if ($user) {
+            $this->userInterface->deleteUser($id);
+            return response()->noContent();
+        }
+        return response()->json(['message' => 'User not found'], 404);
     }
 }

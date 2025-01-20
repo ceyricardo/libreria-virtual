@@ -11,19 +11,19 @@ class ApiTest extends TestCase
 {
     use RefreshDatabase;
     /**
-     *  Testisting function create an Author
+     *  Testisting functions for Model  Author
      * @return void
      */
-    public function test_it_can_get_a_list_of_authors():void
+    public function test_it_can_get_a_list_of_authors(): void
     {
         Author::factory()->count(3)->create();
 
         $response = $this->getJson('authors');
 
         $response->assertStatus(200)
-                 ->assertJsonCount(3, 'data');
+            ->assertJsonCount(3, 'data');
     }
-    public function test_it_can_create_a_new_author():void
+    public function test_it_can_create_a_new_author(): void
     {
         $data = [
             'name' => 'Pablo Neruda',
@@ -34,12 +34,12 @@ class ApiTest extends TestCase
         $response = $this->postJson('authors', $data);
 
         $response->assertStatus(200)
-                 ->assertJsonPath('data.name', 'Pablo Neruda');
+            ->assertJsonPath('data.name', 'Pablo Neruda');
 
         $this->assertDatabaseHas('authors', $data);
     }
 
-    public function test_it_can_update_an_author():void
+    public function test_it_can_update_an_author(): void
     {
         $author = Author::factory()->create();
 
@@ -54,7 +54,7 @@ class ApiTest extends TestCase
         $this->assertDatabaseHas('authors', $updatedData);
     }
 
-    public function test_it_can_delete_an_author():void
+    public function test_it_can_delete_an_author(): void
     {
         $author = Author::factory()->create();
 
@@ -64,15 +64,4 @@ class ApiTest extends TestCase
 
         $this->assertDatabaseMissing('authors', ['id' => $author->id]);
     }
-
-    /**
-     * A basic unit test example.
-     */
-    /*
-    public function test_example(): void
-    {
-        $this->assertTrue(true);
-    }
-        */
-
 }

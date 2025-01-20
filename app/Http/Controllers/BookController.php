@@ -60,7 +60,7 @@ class BookController extends Controller
             'isbn',
             'author_id'
         ]);
-        return response()->json(['data' => $this->bookInterface->updateBook($id,$newDetails)]);
+        return response()->json(['data' => $this->bookInterface->updateBook($id, $newDetails)]);
     }
 
 
@@ -79,7 +79,11 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->bookInterface->deleteBook($id);
-        return response()->noContent();
+        $book = $this->bookInterface->getBookById($id);
+        if ($book) {
+            $this->bookInterface->deleteBook($id);
+            return response()->noContent();
+        }
+        return response()->json(['message' => 'Book not found'], 404);
     }
 }
